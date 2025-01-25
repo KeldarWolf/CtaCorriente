@@ -5,7 +5,6 @@ pipeline {
         REPO_URL = 'https://github.com/KeldarWolf/CtaCorriente.git'  // URL del repositorio
         BRANCH = 'main'  // Rama del repositorio
         MAVEN_HOME = 'C:\\apache-maven-3.9.9\\bin'  // Ruta donde está instalado Maven en tu máquina Windows
-        PATH = MAVEN_HOME + ';' + env.PATH  // Añadir Maven al PATH
     }
 
     stages {
@@ -64,3 +63,4 @@ pipeline {
         }
     }
 }
+
