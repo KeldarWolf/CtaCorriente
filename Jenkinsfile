@@ -4,7 +4,8 @@ pipeline {
     environment {
         REPO_URL = 'https://github.com/KeldarWolf/CtaCorriente.git'  // URL del repositorio
         BRANCH = 'main'  // Rama del repositorio
-        MAVEN_HOME = '/usr/local/maven'  // Ruta donde está instalado Maven, ajusta si es necesario
+        MAVEN_HOME = 'C:\\apache-maven-3.9.9\\bin'  // Ruta donde está instalado Maven en tu máquina Windows
+        PATH = MAVEN_HOME + ';' + env.PATH  // Añadir Maven al PATH
     }
 
     stages {
@@ -20,8 +21,8 @@ pipeline {
         stage('Verificar Dependencias') {
             steps {
                 echo 'Verificando dependencias del proyecto...'
-                // Comando de Maven para verificar dependencias o cualquier otra validación que requieras
-                sh "${MAVEN_HOME}/bin/mvn dependency:tree"
+                // Usar mvn.cmd para verificar dependencias
+                bat '"C:\\apache-maven-3.9.9\\bin\\mvn.cmd" dependency:tree'
             }
         }
 
@@ -29,8 +30,8 @@ pipeline {
         stage('Compilar Proyecto') {
             steps {
                 echo 'Compilando el proyecto con Maven...'
-                // Ejecutar Maven para construir el proyecto
-                sh "${MAVEN_HOME}/bin/mvn clean install"
+                // Usar mvn.cmd para compilar el proyecto
+                bat '"C:\\apache-maven-3.9.9\\bin\\mvn.cmd" clean install'
             }
         }
 
@@ -38,8 +39,8 @@ pipeline {
         stage('Ejecutar Pruebas') {
             steps {
                 echo 'Ejecutando pruebas del proyecto con Maven...'
-                // Ejecutar las pruebas con Maven y guardar los resultados en un archivo XML
-                sh "${MAVEN_HOME}/bin/mvn test -Dtestng.groups=smoke -Dsurefire.reportFormat=xml"
+                // Usar mvn.cmd para ejecutar las pruebas y generar un reporte XML
+                bat '"C:\\apache-maven-3.9.9\\bin\\mvn.cmd" test -Dtestng.groups=smoke -Dsurefire.reportFormat=xml'
             }
         }
 
@@ -49,7 +50,7 @@ pipeline {
                 echo 'Desplegando la aplicación...'
                 // Comando de despliegue, dependiendo de cómo se maneje en tu proyecto
                 // Por ejemplo, puedes copiar archivos al servidor o ejecutar un comando de Docker, etc.
-                // sh 'scp -r target/* user@server:/path/to/deploy'
+                // bat 'scp -r target/* user@server:/path/to/deploy'
             }
         }
     }
